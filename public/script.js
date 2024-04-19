@@ -268,19 +268,23 @@ function getColorForResponseCode(code) {
 
 // API Requests by Chart
 function updateVisualization1(data) {
-    const labels = data.map(item => {
+    // Reverse the data array so that the labels start with the oldest date
+    const reversedData = [...data].reverse();
+
+    const labels = reversedData.map(item => {
         const date = new Date(item.startTs);
         return `${date.getMonth() + 1}/${date.getDate()}`; // Format: MM/DD
     });
 
     // Collect all unique response codes from the data
-    const responseCodes = new Set(data.flatMap(item => item.counts.map(count => count.code)));
+    const responseCodes = new Set(reversedData.flatMap(item => item.counts.map(count => count.code)));
 
     // Create a dataset for each response code, with more descriptive labels
     const datasets = Array.from(responseCodes).map(code => ({
         label: `${getResponseCodeDescription(code)} (${code})`,
         backgroundColor: getColorForResponseCode(code),
-        data: data.map(item => {
+        // Reverse the count arrays as well to match the reversed labels
+        data: reversedData.map(item => {
             const countObj = item.counts.find(count => count.code === code);
             return countObj ? countObj.count : 0;
         })
@@ -304,6 +308,7 @@ function updateVisualization1(data) {
         }
     });
 }
+
 
 function getResponseCodeDescription(code) {
     switch (true) {

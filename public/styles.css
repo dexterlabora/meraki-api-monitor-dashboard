@@ -53,14 +53,34 @@ h1 {
 .api-summary {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
+}
+
+#apiSummary {
+    display: flex;
+    justify-content: center; /* This will center the items on the main axis */
+    align-items: center; /* This will center the items on the cross axis */
+    gap: 150px; /* Adjust the gap between the items as needed */
 }
 
 .api-summary-item {
-    text-align: center;
-    flex-basis: calc(50% - 10px);
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    gap: 10px; /* Optional: adds space between the logo and the text */
+}
+
+.api-logo {
+    height: 100px; /* Sets the image height */
+    /* If you need the image to be strictly to the left, set the following properties: */
+    margin-right: 20px; /* Adjust space between image and text as needed */
+}
+
+.api-summary-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .api-summary-info {

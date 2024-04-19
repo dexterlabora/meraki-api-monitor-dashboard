@@ -5,6 +5,7 @@
   "main": "server.js",
   "bin": "./server.js",
   "scripts": {
+    "build":"pkg .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
