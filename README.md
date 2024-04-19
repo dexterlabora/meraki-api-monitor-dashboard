@@ -2,7 +2,7 @@
 # Meraki API Dashboard Analytics
 
 ## Overview
-This tool is an analytics dashboard for visualizing and analyzing data from the Cisco Meraki Dashboard API. It enables developers and network administrators monitor API usage, track webhook events, and derive insights through various metrics and trends.
+This is a dashboard for visualizing and analyzing data from the Cisco Meraki Dashboard API. It enables developers and network administrators to monitor API usage, track webhook events, and derive insights through various metrics and trends.
 
 > Note: This is for demonstration purposes and may have incomplete functions. 
 
