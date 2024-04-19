@@ -1,0 +1,30 @@
+{
+  "name": "meraki-api-monitor-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "bin": "./server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": ["Cisco", "Meraki"],
+  "author": "Cory Guynn",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-fetch": "^2.6.1"
+  },
+  "pkg": {
+    "scripts": "public/**/*.js",
+    "assets": "public/**/*",
+    "targets": [ 
+      "node18-linux-arm64", 
+      "node18-macos-arm64", 
+      "node18-win-arm64"
+    ],
+    "outputPath": "dist"
+  }
+}
