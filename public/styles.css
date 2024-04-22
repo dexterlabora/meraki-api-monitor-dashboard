@@ -28,12 +28,10 @@ h1 {
     font-size: 1em;
     font-family: inherit;
     border-bottom: 3px solid transparent;
-    /* For non-active tabs */
 }
 
 .tab.active {
     border-bottom: 3px solid #00D58D;
-    /* Active tab color */
 }
 
 /* Visualization container */
@@ -57,7 +55,7 @@ h1 {
 
 /* Timespan selector */
 #timespan {
-    flex-grow: 1; /* Allows the timespan div to grow and fill space */
+    flex-grow: 1;
 }
 
 /* Timespan select */
@@ -70,7 +68,7 @@ h1 {
     display: flex;
     justify-content: left;
     align-items: center;
-    flex-grow: 2; /* Allows the apiSummary to take twice the space of timespan */
+    flex-grow: 2;
     gap: 150px;
 }
 
@@ -94,15 +92,14 @@ h1 {
 
     #timespan {
         width: 100%;
-        margin-bottom: 20px; /* Adds space between timespan and summary items on smaller screens */
+        margin-bottom: 20px;
     }
 }
 
 
 .api-logo {
-    height: 100px; /* Sets the image height */
-    /* If you need the image to be strictly to the left, set the following properties: */
-    margin-right: 20px; /* Adjust space between image and text as needed */
+    height: 100px;
+    margin-right: 20px;
 }
 
 .api-summary-text {
@@ -114,34 +111,24 @@ h1 {
 .api-summary-info {
     font-size: 16px;
     margin-top: 5px;
-    /* Adjust as needed */
 }
 
 .api-summary-info .success {
     display: block;
-    /* Puts content on a new line */
     color: green;
-    /* Green text for success */
     font-weight: bold;
-    /* Optional: bold text */
 }
 
 .api-summary-info .fail {
     display: block;
-    /* Puts content on a new line */
     color: red;
-    /* Red text for fail */
     font-weight: bold;
-    /* Optional: bold text */
 }
 
 .api-summary-info .success-rate {
     display: block;
-    /* Puts content on a new line */
     margin-top: 5px;
-    /* Adjust as needed for spacing */
     font-style: italic;
-    /* Optional: italicized text for the success rate */
 }
 
 
@@ -180,7 +167,6 @@ h1 {
     font-size: 18px;
     margin-bottom: 15px;
     width: 100%;
-    /* Make the heading full width */
 }
 
 .stats-column p {
@@ -188,7 +174,6 @@ h1 {
     color: #555;
     margin: 5px 0;
     line-height: 1.4;
-    /* Improve readability */
 }
 
 .stats-column span {
@@ -210,14 +195,12 @@ h1 {
 }
 
 
-/* This wrapper will be the scrollable container */
-
-
+/* The scrollable table container */
 .scrollable-table-wrapper {
     overflow-y: auto;
     height: 550px;
-    /* or however tall you want it to be */
 }
+
 .scrollable-table thead th {
     background-color: #f2f2f2 !important;
     position: sticky !important;
@@ -226,6 +209,7 @@ h1 {
     padding-left: 20px !important;
     top: 0;
     z-index: 10;
+    min-width: 130px;
 }
 
 
@@ -238,7 +222,6 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 0;
-    /* remove margin to avoid extra space inside the scrollable area */
 }
 
 /* Make the table header fixed */
@@ -247,7 +230,6 @@ thead th {
     top: 0;
     background-color: #f2f2f2;
     z-index: 10;
-    /* ensure it's above other elements */
 }
 
 th,
@@ -274,21 +256,16 @@ td {
 #apiRequestsChart {
     /* Set a max height to prevent canvas from getting too tall */
     max-height: 70%;
-    /* Adjust based on your preference */
+
 }
 
 
 /* Ensure the div containing the canvas is responsive */
 .apiRequestsChart {
     position: relative;
-    /* Container for the canvas to control the size */
     height: 0;
-    /* Set to 0 to control via padding */
     padding-top: 50%;
-    /* Control aspect ratio, e.g., padding-top: 50% for a 2:1 aspect ratio */
     overflow: hidden;
-    /* Hide overflow */
-
 }
 
 .apiRequestsChart canvas {
@@ -303,32 +280,37 @@ td {
 
 .modal {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 10; /* Sit on top */
+    position: fixed;
+    z-index: 10;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     animation-name: modalopen;
     animation-duration: 0.4s;
 }
 
 /* Add Animation */
 @keyframes modalopen {
-    from {opacity: 0}
-    to {opacity: 1}
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
 }
 
 .close {
@@ -359,13 +341,14 @@ select {
 
 /* Style the buttons */
 button {
-    background-color: #45a049;; 
+    background-color: #45a049;
+    ;
     color: #656c75;
     padding: 5px 5px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-   
+
 }
 
 button:hover {
@@ -380,24 +363,21 @@ button[type=submit] {
 /* Add a margin to the button on the right (Fetch Organizations) */
 #fetchOrgsButton {
     margin-right: 10px;
-    width: auto; /* Adjust the width */
-    display: inline-block; /* Display inline-block */
+    width: auto;
+    display: inline-block;
 }
 
 /* Label styling */
 label {
     margin-top: 10px;
-    display: block; /* Make labels block to go full width */
-    font-weight: bold; /* Make text bold */
+    display: block;
+    font-weight: bold;
 }
 
 /* Add space between form elements */
 .form-element {
     margin-bottom: 10px;
 }
-
-
-
 
 
 .api-webhooks-section {
@@ -468,7 +448,8 @@ label {
     background-color: #f9f9f9;
 }
 
-#configForm input, #configForm select {
+#configForm input,
+#configForm select {
     padding: 8px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -490,22 +471,27 @@ label {
 
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
     border-radius: 50%;
     width: 120px;
     height: 120px;
     animation: spin 2s linear infinite;
-    display: none; /* Hidden by default */
-    position: fixed; /* Positioned relative to the viewport */
-    left: 50%; /* Center the loader */
-    top: 50%; /* Center the loader */
-    transform: translate(-50%, -50%); /* Align the center of the loader with the center of the viewport */
+    display: none;   /* Hidden by default */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -519,10 +505,10 @@ thead input[type="text"] {
 }
 
 thead th {
-    position: relative; /* Needed for absolute positioning of the input */
+    position: relative;
 }
 
-/* Styles to make the dropdown filters and the table look better */
+/* Styles for the table filters */
 .dropbtn {
     background-color: #4CAF50;
     color: white;
@@ -542,7 +528,7 @@ thead th {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -553,7 +539,9 @@ thead th {
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -581,16 +569,16 @@ thead th {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    padding-bottom:45px;
+    padding-bottom: 45px;
     width: calc(30% - 20px);
-    text-align: left; /* Align text to the left for a clean look */
-    position: relative; /* Position relative for absolute positioning of children */
+    text-align: left;
+    position: relative;
 }
 
 .http-server-stat-card h3 {
     color: #333333;
     margin: 0;
-    padding-bottom: 10px; /* Space between title and stats */
+    padding-bottom: 10px;
 }
 
 /* Stat line for success and fail */
@@ -602,12 +590,14 @@ thead th {
 }
 
 /* Success and fail labels */
-.success-label, .fail-label {
+.success-label,
+.fail-label {
     font-weight: bold;
 }
 
 /* Success and fail values */
-.success-value, .fail-value {
+.success-value,
+.fail-value {
     margin-left: 10px;
 }
 
@@ -624,17 +614,17 @@ thead th {
 
 /* Latency stats */
 .latency-value {
-    font-size: 0.8em; /* Smaller font size for subtext */
-    color: #888888; /* Grey color for latency */
+    font-size: 0.8em;
+    color: #888888; 
 }
 
 /* Success percentage */
 .success-percentage {
-    position: absolute; /* Positioned absolutely at the bottom right corner */
-    bottom: 20px; /* 20px from bottom */
-    left: 20px; /* 20px from right */
-    font-size: 1.2em; /* Slightly larger font size */
-    color: #4CAF50; /* Green color for success percentage */
+    position: absolute;
+    bottom: 20px; 
+    left: 20px; 
+    font-size: 1.2em;
+    color: #4CAF50;
 }
 
 /* Media queries for responsiveness */

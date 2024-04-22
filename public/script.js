@@ -198,7 +198,7 @@ async function fetchDataAndUpdateVis(timespan = 'month') {
         updateVisualization2(apiRequestsOverviewData, webhookLogsData);
         updateVisualization1(responseCodesData);
 
-        // Now that we have webhook logs, we can calculate HTTP server stats and update visualization
+        // Calculate HTTP server stats and update visualization
         allWebhookData = webhookLogsData; // Store for filtering if needed
         updateVisualization4(webhookLogsData);
         updateWebhookLogAnalysis(webhookLogsData);
@@ -559,8 +559,6 @@ function updateWebhookLogAnalysis(allWebhookData) {
     document.getElementById('webhookTopUrlFails').textContent = getTopEntry(urlCountsFailure)[0];
     document.getElementById('webhookTopNetworkIdFail').textContent = getTopEntry(networkIdCountsFailure)[0];
     document.getElementById('webhookLongestResponseTime').textContent = `${getTopEntry(responseTimesSuccess)[1]} ms`;
-    // Peak response time for failures is not meaningful if failure is due to timeout (-1 response codes),
-    // so it's not updated here. Add this if you have a better definition of "peak response time" for failures.
     document.getElementById('webhookBusiestDayFails').textContent = getTopEntry(dayCounts.failure)[0];
     document.getElementById('webhookBusiestTimeFrameFails').textContent = getTopEntry(timeFrameCounts.failure)[0];
 
