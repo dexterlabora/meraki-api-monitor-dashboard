@@ -590,7 +590,7 @@ thead th {
 /* Failure stats */
 .fail-value {
     color: red;
-    padding-left: 47px;
+    padding-left: 30px;
 }
 
 /* Latency stats */
