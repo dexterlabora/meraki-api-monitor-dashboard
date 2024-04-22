@@ -19,6 +19,8 @@
         <option value="">Select Organization</option>
     </select>
 
+
+
     <!-- Configuration Modal Content -->
     <div id="configModal" class="modal">
         <div class="modal-content">
@@ -78,37 +80,50 @@
         </div>
     </div>
 
+
+
     <!-- Health -->
     <div class="visualization" id="viz2">
-
-        <!-- <h2>Health</h2> -->
-        <div id="apiSummary" class="api-summary">
-            <div class="api-summary-item">
-                <img src="images/api-logo.png" alt="API" class="api-logo">
-                <div class="api-summary-text">
-                    <div class="api-summary-label"><b>API Requests</b></div>
-                    <div class="api-summary-info">
-                        <span class="success">Success: 2440223</span>
-                        <span class="fail">Fail: 733917</span>
-                        <span class="success-rate">76.88% success</span>
-                    </div>
-                </div>
+        <div class="api-summary-header">
+            <!-- Global timespan selector -->
+            <div id="timespan">
+                <label for="timespanSelect">Timespan:</label>
+                <select id="timespanSelect">
+                    <option value="day">Day</option>
+                    <option value="week">Week</option>
+                    <option value="month" selected>Month</option>
+                </select>
             </div>
-
-            <div class="api-summary-item">
-                <img src="images/webhook-logo.png" alt="Webhooks" height="100px" />
-                <div class="api-summary-text">
-                    <div class="api-summary-label"><b>Webhooks Sent</b></div>
-                    <div class="api-summary-info">
-                        <span class="success">Success: 3</span>
-                        <span class="fail">Fail: 47</span>
-                        <span class="success-rate">6.00% success</span>
+            <!-- API and Webhooks Summary -->
+            <div id="apiSummary" class="api-summary">
+                <!-- API Requests Summary Item -->
+                <div class="api-summary-item">
+                    <img src="images/api-logo.png" alt="API" class="api-logo">
+                    <div class="api-summary-text">
+                        <div class="api-summary-label"><b>API Requests</b></div>
+                        <div class="api-summary-info">
+                            <span class="success">Success: Loading...</span>
+                            <span class="fail">Fail: Loading...</span>
+                            <span class="success-rate">% success</span>
+                        </div>
                     </div>
                 </div>
-
+                <!-- Webhooks Summary Item -->
+                <div class="api-summary-item">
+                    <img src="images/webhook-logo.png" alt="Webhooks" height="100px" />
+                    <div class="api-summary-text">
+                        <div class="api-summary-label"><b>Webhooks Sent</b></div>
+                        <div class="api-summary-info">
+                            <span class="success">Success: Loading...</span>
+                            <span class="fail">Fail: Loading...</span>
+                            <span class="success-rate">% success</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
 
 
 
@@ -118,15 +133,6 @@
         <p><i>(Grouped by Response Code)</i></p>
 
         <canvas id="apiRequestsChart"></canvas>
-    </div>
-
-    <div>
-        <label for="timespanSelect">Timespan:</label>
-        <select id="timespanSelect">
-            <option value="day">Day</option>
-            <option value="week">Week</option>
-            <option value="month" selected>Month</option>
-        </select>
     </div>
 
     <div class="dropdown">
@@ -188,15 +194,15 @@
         </div>
     </div>
 
-    
+
 
 
     <!-- Visualization 4: Webhook Logs Table with Filters -->
     <div class="visualization" id="viz4">
         <h2>Webhook History</h2>
-            <!-- HTTP Servers Stats -->
+        <!-- HTTP Servers Stats -->
         <div id="httpServersStats">
-            
+
             <div class="http-servers-stats-container">
                 Loading...
                 <!-- Stats will be inserted here-->

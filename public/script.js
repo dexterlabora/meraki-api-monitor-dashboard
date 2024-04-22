@@ -627,12 +627,12 @@ function updateHttpServerStats(httpServerStats) {
             <h3>${data.hostname}</h3>
             <div class="http-server-stat-line">
                 <span class="success-label">Success:</span> 
-                <span class="success-value">${data.success} sent</span> 
+                <span class="success-value">${data.success} requests</span> 
                 <span class="latency-value">~${data.avgSuccessDuration}ms</span>
             </div>
             <div class="http-server-stat-line">
                 <span class="fail-label">Fail:</span> 
-                <span class="fail-value">${data.fail} sent</span> 
+                <span class="fail-value">${data.fail} requests</span> 
                 <span class="latency-value">~${data.avgFailDuration}ms</span>
             </div>
             <div class="success-percentage">${calculatePercent(data.success, data.success + data.fail)}% Success</div>

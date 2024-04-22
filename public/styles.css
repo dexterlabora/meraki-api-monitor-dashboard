@@ -36,6 +36,7 @@ h1 {
     /* Active tab color */
 }
 
+/* Visualization container */
 .visualization {
     background: #fff;
     border-radius: 4px;
@@ -45,12 +46,8 @@ h1 {
     padding: 20px;
 }
 
-.visualization h2 {
-    color: #0052cc;
-    margin-bottom: 20px;
-}
-
-.api-summary {
+/* Header for timespan and summary items */
+.api-summary-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -58,18 +55,49 @@ h1 {
     gap: 20px;
 }
 
-#apiSummary {
-    display: flex;
-    justify-content: center; /* This will center the items on the main axis */
-    align-items: center; /* This will center the items on the cross axis */
-    gap: 150px; /* Adjust the gap between the items as needed */
+/* Timespan selector */
+#timespan {
+    flex-grow: 1; /* Allows the timespan div to grow and fill space */
 }
 
+/* Timespan select */
+#timespan select {
+    width: 120px;
+}
+
+/* API Summary */
+#apiSummary {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-grow: 2; /* Allows the apiSummary to take twice the space of timespan */
+    gap: 150px;
+}
+
+/* Summary Item */
 .api-summary-item {
     display: flex;
-    align-items: center; /* Aligns items vertically in the center */
-    gap: 10px; /* Optional: adds space between the logo and the text */
+    align-items: center;
+    gap: 10px;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .api-summary-header {
+        flex-direction: column;
+    }
+
+    #apiSummary {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    #timespan {
+        width: 100%;
+        margin-bottom: 20px; /* Adds space between timespan and summary items on smaller screens */
+    }
+}
+
 
 .api-logo {
     height: 100px; /* Sets the image height */
@@ -177,9 +205,10 @@ h1 {
 }
 
 #viz4 {
-    height: 1172px;
+    min-height: 1000px;
 
 }
+
 
 /* This wrapper will be the scrollable container */
 
