@@ -10,6 +10,8 @@ const closeModal = document.querySelector('.close');
 const loader = document.getElementById('loader');
 let chart, apiDataCache = {};
 let allWebhookData = [];
+const httpServerStats = [];
+
 
 // Initialize the application
 function init() {
@@ -164,7 +166,7 @@ async function fetchOrganizationAdmins(organizationId) {
         });
 }
 
-// Fetch and Update Data
+// Fetch and Update Meraki Data
 async function fetchDataAndUpdateVis(timespan = 'month') {
     showLoader();
     const apiKey = localStorage.getItem('MerakiApiKey');
@@ -174,53 +176,41 @@ async function fetchDataAndUpdateVis(timespan = 'month') {
         return;
     }
 
-
     const headers = {
         'Authorization': apiKey,
         'Content-Type': 'application/json'
     };
 
     const merakiAdmins = localStorage.getItem('MerakiAdmins');
-
-
     const timespanSeconds = getTimespanInSeconds(timespan);
 
-    // Fetch API Requests and update visualization when data arrives
-    fetch(`/api/organizations/${organizationId}/apiRequests?timespan=${timespanSeconds}&perPage=1000`, { headers })
-        .then(res => res.json())
-        .then(apiRequestsData => {
-            updateVisualization3(apiRequestsData);
-            updateApiRequestAnalysis(apiRequestsData, merakiAdmins);
-        }).catch(handleError);
+    try {
+        const [apiRequestsData, apiRequestsOverviewData, responseCodesData, webhookLogsData] = await Promise.all([
+            fetch(`/api/organizations/${organizationId}/apiRequests?timespan=${timespanSeconds}&perPage=1000`, { headers }).then(res => res.json()),
+            fetch(`/api/organizations/${organizationId}/apiRequests/overview?timespan=${timespanSeconds}`, { headers }).then(res => res.json()),
+            fetch(`/api/organizations/${organizationId}/apiRequests/overview/responseCodes/byInterval?timespan=${timespanSeconds}`, { headers }).then(res => res.json()),
+            fetch(`/api/organizations/${organizationId}/webhooks/logs?timespan=${timespanSeconds}&perPage=1000`, { headers }).then(res => res.json())
+        ]);
 
-    // Fetch API Requests Overview and update visualization when data arrives
-    fetch(`/api/organizations/${organizationId}/apiRequests/overview?timespan=${timespanSeconds}`, { headers })
-        .then(res => res.json())
-        .then(apiRequestsOverviewData => {
-            updateVisualization2(apiRequestsOverviewData, allWebhookData); // Assumes allWebhookData is available or handle appropriately
-        }).catch(handleError);
+        // All fetch requests have completed, now update visualizations
+        updateVisualization3(apiRequestsData);
+        updateApiRequestAnalysis(apiRequestsData, merakiAdmins);
+        updateVisualization2(apiRequestsOverviewData, webhookLogsData);
+        updateVisualization1(responseCodesData);
 
-    // Fetch Response Codes by Interval and update visualization when data arrives
-    fetch(`/api/organizations/${organizationId}/apiRequests/overview/responseCodes/byInterval?timespan=${timespanSeconds}`, { headers })
-        .then(res => res.json())
-        .then(responseCodesData => {
-            allApiResponseData = responseCodesData; // Store for filtering if needed
-            updateVisualization1(responseCodesData);
-        }).catch(handleError)
-        .finally(() => hideLoader());  // improve this - should wait for all requests to load befor hiding loader
-
-
-
-    // Fetch Webhook Logs and update visualization when data arrives
-    fetch(`/api/organizations/${organizationId}/webhooks/logs?timespan=${timespanSeconds}&perPage=1000`, { headers })
-        .then(res => res.json())
-        .then(webhookLogsData => {
-            allWebhookData = webhookLogsData; // Store for filtering if needed
-            updateVisualization4(webhookLogsData);
-            updateWebhookLogAnalysis(webhookLogsData);
-        }).catch(handleError)
-
+        // Now that we have webhook logs, we can calculate HTTP server stats and update visualization
+        allWebhookData = webhookLogsData; // Store for filtering if needed
+        updateVisualization4(webhookLogsData);
+        updateWebhookLogAnalysis(webhookLogsData);
+        const httpServerStats = calculateHttpServerStats(webhookLogsData);
+        updateHttpServerStats(httpServerStats);
+    } catch (error) {
+        handleError(error);
+    } finally {
+        hideLoader(); // Hide loader after all fetch calls and updates
+    }
 }
+
 
 // Utility Functions
 function showLoader() {
@@ -385,7 +375,7 @@ function filterTable(input, columnIndex) {
     updateRecordCount(table.id); // Pass the ID of the table to update the correct count
 }
 
-// Visualization updates as before but call updateRecordCount for the appropriate table
+// API Request Table
 function updateVisualization3(data) {
     const admins = JSON.parse(localStorage.getItem('MerakiAdmins')) || [];
     const adminMap = new Map(admins.map(admin => [admin.id, admin]));
@@ -407,6 +397,7 @@ function updateVisualization3(data) {
     updateRecordCount('apiRequestTable');
 }
 
+// Webhook Logs Table
 function updateVisualization4(data) {
     const tbody = document.querySelector('#webhookLogsTable tbody');  // Ensure you have an id for your webhook table
 
@@ -577,6 +568,80 @@ function updateWebhookLogAnalysis(allWebhookData) {
     document.getElementById('totalWebhookRecords').textContent = allWebhookData.length.toString();
 }
 
+
+// Helper functions
+const getHostnameFromUrl = (url) => new URL(url).hostname;
+const calculatePercent = (partialValue, totalValue) => (totalValue ? ((partialValue / totalValue) * 100).toFixed(2) : 0);
+
+// Main function to calculate HTTP server stats 
+function calculateHttpServerStats(webhookLogsData) {
+    const stats = {};
+
+    webhookLogsData.forEach(log => {
+        const hostname = getHostnameFromUrl(log.url);
+        if (!stats[hostname]) {
+            stats[hostname] = { 
+                hostname, 
+                success: 0, 
+                fail: 0, 
+                totalSuccessDuration: 0, 
+                totalFailDuration: 0,
+                countSuccess: 0, 
+                countFail: 0 
+            };
+        }
+        if (log.responseCode >= 200 && log.responseCode < 300) {
+            stats[hostname].success += 1;
+            stats[hostname].totalSuccessDuration += log.responseDuration;
+            stats[hostname].countSuccess += 1;
+        } else {
+            stats[hostname].fail += 1;
+            stats[hostname].totalFailDuration += log.responseDuration;
+            stats[hostname].countFail += 1;
+        }
+    });
+
+    // Calculate average response duration for successful and failed responses
+    Object.keys(stats).forEach(hostname => {
+        stats[hostname].avgSuccessDuration = stats[hostname].countSuccess > 0
+            ? (stats[hostname].totalSuccessDuration / stats[hostname].countSuccess).toFixed(2)
+            : 'N/A';
+        stats[hostname].avgFailDuration = stats[hostname].countFail > 0
+            ? (stats[hostname].totalFailDuration / stats[hostname].countFail).toFixed(2)
+            : 'N/A';
+    });
+
+    // Convert stats into an array and sort by hostname
+    return Object.values(stats).sort((a, b) => a.hostname.localeCompare(b.hostname));
+}
+
+// Function to update HTML with the calculated stats
+function updateHttpServerStats(httpServerStats) {
+    const statsContainer = document.querySelector('.http-servers-stats-container');
+    statsContainer.innerHTML = ''; // Clear previous stats
+
+    httpServerStats.forEach(data => {
+        const statCard = document.createElement('div');
+        statCard.className = 'http-server-stat-card';
+        statCard.innerHTML = `
+            <h3>${data.hostname}</h3>
+            <div class="http-server-stat-line">
+                <span class="success-label">Success:</span> 
+                <span class="success-value">${data.success} sent</span> 
+                <span class="latency-value">~${data.avgSuccessDuration}ms</span>
+            </div>
+            <div class="http-server-stat-line">
+                <span class="fail-label">Fail:</span> 
+                <span class="fail-value">${data.fail} sent</span> 
+                <span class="latency-value">~${data.avgFailDuration}ms</span>
+            </div>
+            <div class="success-percentage">${calculatePercent(data.success, data.success + data.fail)}% Success</div>
+        `;
+        statsContainer.appendChild(statCard);
+    });
+}
+
+  
 
 // Start the application
 init();

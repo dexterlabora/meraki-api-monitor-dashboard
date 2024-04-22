@@ -41,7 +41,7 @@ h1 {
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     padding: 20px;
 }
 
@@ -177,7 +177,7 @@ h1 {
 }
 
 #viz4 {
-    height: 900px;
+    height: 1172px;
 
 }
 
@@ -532,4 +532,91 @@ thead th {
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+}
+
+
+/* HTTP Servers Statistics Container */
+.http-servers-stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    background-color: #eaecef;
+}
+
+/* Individual HTTP Server Stat Card */
+.http-server-stat-card {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    padding-bottom:45px;
+    width: calc(30% - 20px);
+    text-align: left; /* Align text to the left for a clean look */
+    position: relative; /* Position relative for absolute positioning of children */
+}
+
+.http-server-stat-card h3 {
+    color: #333333;
+    margin: 0;
+    padding-bottom: 10px; /* Space between title and stats */
+}
+
+/* Stat line for success and fail */
+.http-server-stat-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Success and fail labels */
+.success-label, .fail-label {
+    font-weight: bold;
+}
+
+/* Success and fail values */
+.success-value, .fail-value {
+    margin-left: 10px;
+}
+
+/* Success stats */
+.success-value {
+    color: green;
+}
+
+/* Failure stats */
+.fail-value {
+    color: red;
+    padding-left: 47px;
+}
+
+/* Latency stats */
+.latency-value {
+    font-size: 0.8em; /* Smaller font size for subtext */
+    color: #888888; /* Grey color for latency */
+}
+
+/* Success percentage */
+.success-percentage {
+    position: absolute; /* Positioned absolutely at the bottom right corner */
+    bottom: 20px; /* 20px from bottom */
+    left: 20px; /* 20px from right */
+    font-size: 1.2em; /* Slightly larger font size */
+    color: #4CAF50; /* Green color for success percentage */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .http-server-stat-card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .http-server-stat-card {
+        width: 100%;
+    }
 }

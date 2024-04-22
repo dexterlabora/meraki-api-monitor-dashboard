@@ -92,18 +92,18 @@
                         <span class="fail">Fail: 733917</span>
                         <span class="success-rate">76.88% success</span>
                     </div>
-                </div>   
+                </div>
             </div>
-            
+
             <div class="api-summary-item">
                 <img src="images/webhook-logo.png" alt="Webhooks" height="100px" />
                 <div class="api-summary-text">
-                <div class="api-summary-label"><b>Webhooks Sent</b></div>
-                <div class="api-summary-info">
-                    <span class="success">Success: 3</span>
-                    <span class="fail">Fail: 47</span>
-                    <span class="success-rate">6.00% success</span>
-                </div>
+                    <div class="api-summary-label"><b>Webhooks Sent</b></div>
+                    <div class="api-summary-info">
+                        <span class="success">Success: 3</span>
+                        <span class="fail">Fail: 47</span>
+                        <span class="success-rate">6.00% success</span>
+                    </div>
                 </div>
 
             </div>
@@ -188,16 +188,26 @@
         </div>
     </div>
 
+    
+
+
     <!-- Visualization 4: Webhook Logs Table with Filters -->
     <div class="visualization" id="viz4">
         <h2>Webhook History</h2>
+            <!-- HTTP Servers Stats -->
+        <div id="httpServersStats">
+            
+            <div class="http-servers-stats-container">
+                Loading...
+                <!-- Stats will be inserted here-->
+            </div>
+        </div>
         <!-- Webhook Logs Analysis -->
         <div class="webhook-log-analysis">
             <div class="stats-column success">
                 <h3>Webhook Success Stats</h3>
                 <p>Top URL: <span id="webhookTopUrl">Loading...</span></p>
                 <p>Top Network ID: <span id="webhookTopNetworkId">Loading...</span></p>
-                <!-- <p>Peak Response Time: <span id="webhookPeakResponseTimeSuccess">Loading...</span></p> -->
                 <p>Lowest Response Time: <span id="webhookLowestResponseTime">Loading...</span></p>
                 <p>Busiest Day: <span id="webhookBusiestDaySuccess">Loading...</span></p>
                 <p>Busiest Time Frame: <span id="webhookBusiestTimeFrameSuccess">Loading...</span></p>
@@ -211,6 +221,7 @@
                 <p>Busiest Time Frame: <span id="webhookBusiestTimeFrameFails">Loading...</span></p>
             </div>
         </div>
+
 
 
         <div class="scrollable-table-wrapper">
